@@ -2,11 +2,34 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const dist = path.join(root, 'dist');
-const source = path.join(dist, 'sitemap-0.xml');
+const distRoot = path.join(root, 'dist');
 
+/** Astro static → `dist/`; @astrojs/cloudflare adapter → `dist/client/`. */
+function resolvePublishDir() {
+  const clientDir = path.join(distRoot, 'client');
+  const clientSitemap = path.join(clientDir, 'sitemap-0.xml');
+  const rootSitemap = path.join(distRoot, 'sitemap-0.xml');
+
+  if (fs.existsSync(clientSitemap)) return clientDir;
+  if (fs.existsSync(rootSitemap)) return distRoot;
+
+  const clientIndex = path.join(clientDir, 'sitemap-index.xml');
+  const rootIndex = path.join(distRoot, 'sitemap-index.xml');
+  if (fs.existsSync(clientIndex)) return clientDir;
+  if (fs.existsSync(rootIndex)) return distRoot;
+
+  return null;
+}
+
+const publishDir = resolvePublishDir();
+if (!publishDir) {
+  console.error('finalize-sitemap: no dist/ or dist/client/ sitemap-0.xml — run astro build first.');
+  process.exit(1);
+}
+
+const source = path.join(publishDir, 'sitemap-0.xml');
 if (!fs.existsSync(source)) {
-  console.error('finalize-sitemap: dist/sitemap-0.xml not found — run astro build first.');
+  console.error(`finalize-sitemap: ${path.relative(root, source)} not found.`);
   process.exit(1);
 }
 
@@ -15,6 +38,16 @@ const urlCount = (raw.match(/<url>/g) ?? []).length;
 
 if (urlCount === 0) {
   console.error('finalize-sitemap: sitemap-0.xml contains no URLs.');
+  process.exit(1);
+}
+
+if (/workers\.dev/i.test(raw)) {
+  console.error('finalize-sitemap: workers.dev URL found in sitemap — aborting.');
+  process.exit(1);
+}
+
+if (!raw.includes('https://robcheats.org')) {
+  console.error('finalize-sitemap: missing robcheats.org URLs in sitemap.');
   process.exit(1);
 }
 
@@ -36,9 +69,14 @@ function formatUrlset(xml) {
 }
 
 const formatted = formatUrlset(raw);
-fs.writeFileSync(path.join(dist, 'sitemap.xml'), formatted, 'utf8');
+const targets = new Set([publishDir]);
+if (publishDir !== distRoot) targets.add(distRoot);
 
-const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
+for (const dir of targets) {
+  fs.writeFileSync(path.join(dir, 'sitemap.xml'), formatted, 'utf8');
+  fs.writeFileSync(path.join(dir, 'sitemap-0.xml'), formatted, 'utf8');
+
+  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://robcheats.org/sitemap.xml</loc>
@@ -46,7 +84,7 @@ const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
   </sitemap>
 </sitemapindex>
 `;
-fs.writeFileSync(path.join(dist, 'sitemap-index.xml'), indexXml, 'utf8');
-fs.writeFileSync(path.join(dist, 'sitemap-0.xml'), formatted, 'utf8');
+  fs.writeFileSync(path.join(dir, 'sitemap-index.xml'), indexXml, 'utf8');
+}
 
-console.log(`Sitemap finalized: ${urlCount} URLs → dist/sitemap.xml`);
+console.log(`Sitemap finalized: ${urlCount} URLs → ${path.relative(root, publishDir)}/sitemap.xml`);

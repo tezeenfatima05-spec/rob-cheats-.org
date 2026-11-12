@@ -23,8 +23,8 @@ export const en: Translations = {
   hero: {
     status: 'ROB RUN — patch build online',
     eyebrow: '#1 Undetected Provider',
-    titleLine1: 'ROB',
-    titleLine2: 'WITH CHEATS',
+    titleLine1: 'ROB RUN',
+    titleLine2: 'CHEATS',
     subtitle:
       'Soft aimbot, player ESP, vehicle tracking, loot radar, and misc assists for ROB RUN on Steam—configs, stream-proof overlay, and live support at robcheats.org.',
     ctaPrimary: 'View products',
