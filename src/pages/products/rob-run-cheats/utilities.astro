@@ -1,0 +1,111 @@
+---
+import '../../../styles/product-cheat-page.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { productHub, productPages } from '../../../data/products';
+import { resolvePageSeo } from '../../../config/seo';
+import { breadcrumbSchema, itemListSchema, webPageSchema } from '../../../utils/schema';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { productPath } from '../../../utils/path';
+import { Button } from '@/components/starwind/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/starwind/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/starwind/table';
+
+const utilities = productPages.filter((p) => p.kind === 'utility');
+const seo = resolvePageSeo('/products/rob-run-cheats/utilities/');
+const breadcrumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: productHub.path },
+  { name: 'Compare utilities', path: '/products/rob-run-cheats/utilities/' },
+];
+
+const utilityUseCases: Record<string, string> = {
+  'cloud-dma': 'Supported DMA hardware—run ROB RUN ESP and aimbot outside the game process.',
+  'hwid-spoofer': 'New PC or hardware flag—reset identifiers before a fresh ROB RUN account.',
+};
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  jsonLd={[
+    webPageSchema({
+      name: 'Compare ROB RUN utilities',
+      description: seo.description,
+      url: '/products/rob-run-cheats/utilities/',
+    }),
+    breadcrumbSchema(breadcrumbs),
+    itemListSchema(
+      utilities.map((product) => ({
+        name: product.title,
+        url: productPath(product.slug),
+      })),
+    ),
+  ]}
+>
+  <section class="py-8 md:py-12">
+    <div class="mx-auto max-w-6xl px-5">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="mt-6 max-w-3xl space-y-3">
+        <h1 class="text-3xl font-bold uppercase md:text-4xl">ROB RUN utilities</h1>
+        <p class="text-lg text-muted-foreground">
+          Cloud DMA and HWID Spoofer—when each tool fits your ROB RUN setup.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {
+          utilities.map((product) => (
+            <Card class="flex h-full flex-col">
+              <CardHeader>
+                <CardTitle class="text-xl">{product.title}</CardTitle>
+              </CardHeader>
+              <CardContent class="flex flex-1 flex-col gap-4">
+                <p class="text-sm text-muted-foreground">{product.desc}</p>
+                <p class="text-sm">{utilityUseCases[product.slug] ?? product.subtitle}</p>
+                <Button as="a" href={product.buyUrl} variant="primary" class="mt-auto w-full">
+                  Get {product.title}
+                </Button>
+                <Button as="a" href={productPath(product.slug)} variant="outline" class="w-full">
+                  View details
+                </Button>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+
+      <Table class="mt-12">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Utility</TableHead>
+            <TableHead>Best for</TableHead>
+            <TableHead>Details</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {
+            utilities.map((product) => (
+              <TableRow>
+                <TableCell class="font-medium">{product.title}</TableCell>
+                <TableCell>{utilityUseCases[product.slug] ?? product.category}</TableCell>
+                <TableCell>
+                  <a class="text-primary hover:underline" href={productPath(product.slug)}>
+                    Read more
+                  </a>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+        </TableBody>
+      </Table>
+    </div>
+  </section>
+</BaseLayout>

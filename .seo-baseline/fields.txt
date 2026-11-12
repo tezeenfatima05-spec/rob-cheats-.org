@@ -1,0 +1,56 @@
+=== index.html ===
+ROB RUN Cheats &amp; Hacks | Scripts, Map Hack &amp; ESP
+ROB RUN cheats for PC ranked: scripts, map hack, zoom hack, and skin changer tiers updated every patch at robcheats.org.
+https://robcheats.org/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== cheats/index.html ===
+ROB RUN Cheat Tiers | Lite, Pro &amp; Elite
+Compare Lite, Pro, and Elite ROB RUN cheats—ESP, scripts, map hack, and automation modules for Steam ranked on Windows.
+https://robcheats.org/cheats/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== cheats/lite/index.html ===
+Lite ROB RUN Cheats | ROB Cheats
+Entry tier for ROB RUN cheats with player ESP, ward locator, jungle awareness and minimap overlay.
+https://robcheats.org/cheats/lite/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== blog/index.html ===
+ROB RUN Cheats Guides &amp; Patch Notes
+Setup guides, Lite vs Pro comparisons, VAC patch checklists, and ranked config tips for ROB RUN cheats.
+https://robcheats.org/blog/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== blog/dota-2-cheat-codes-guide/index.html ===
+ROB RUN cheat codes guide: console commands for | ROB Cheats
+Full list of ROB RUN cheat codes for custom lobbies—gold, levels, vision, hero spawn and item commands.
+https://robcheats.org/blog/dota-2-cheat-codes-guide/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== faq/index.html ===
+FAQ | ROB RUN Cheats, Products &amp; Setup
+Answers on cheat tiers, map hack, scripts, HWID tools, checkout, and blog guides at robcheats.org.
+https://robcheats.org/faq/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== contact/index.html ===
+Contact &amp; Support | ROB Cheats
+Get help with loader setup, HWID, and checkout for ROB RUN cheat tiers and utilities.
+https://robcheats.org/contact/
+index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
+1
+1
+=== 404.html ===
+Page not found | ROB Cheats
+The page you requested could not be found on robcheats.org.
+https://robcheats.org/404/
+noindex, nofollow
+0
+1

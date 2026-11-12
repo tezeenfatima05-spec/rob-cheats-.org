@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /go/
+
+Sitemap: https://robcheats.org/sitemap.xml
+
+# RSS: https://robcheats.org/rss.xml
